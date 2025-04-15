@@ -6,8 +6,6 @@ Sistem rekomendasi telah menjadi bagian integral dari platform digital, terutama
 
 Sistem ini mengandalkan fitur-fitur seperti genre, sinopsis, sutradara, dan aktor untuk mengidentifikasi kesamaan antar film dan menghasilkan saran yang relevan.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-
 Proyek ini penting karena Dengan meningkatnya jumlah film yang tersedia secara online, pengguna sering mengalami kebingungan dalam memilih tontonan. Sistem rekomendasi ini membantu menyederhanakan proses pengambilan keputusan tersebut.  
   
 Referensi : Content-Based Recommendation Systems, Ricci, F., Rokach, L., & Shapira, B. (2015)
@@ -37,8 +35,6 @@ Sistem rekomendasi telah menjadi komponen penting dalam industri hiburan digital
 
 - Menyediakan rekomendasi film yang relevan dan mudah diakses bagi pengguna berdasarkan input satu film yang mereka sukai.
 → Output berupa daftar film serupa (top-N recommendations).
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
 
 ### Solution statements
 Untuk mencapai tujuan proyek ini, digunakan dua pendekatan berbeda dalam sistem rekomendasi:  
