@@ -8,7 +8,6 @@ Secara khusus, komunitas Pima Indians di Amerika Serikat memiliki tingkat preval
 
 Dataset Pima Indians Diabetes Dataset berisi data kesehatan perempuan berusia di atas 21 tahun dari komunitas tersebut, mencakup informasi seperti jumlah kehamilan, kadar glukosa, tekanan darah, BMI, dan faktor genetik. Dengan memanfaatkan machine learning, kita dapat membangun model prediksi untuk mengklasifikasikan apakah seseorang berisiko terkena diabetes atau tidak berdasarkan fitur-fitur tersebut.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
 ### Pentingnya Masalah Ini Diselesaikan
 - Deteksi Dini & Pencegahan: Mengembangkan model klasifikasi yang akurat akan membantu deteksi dini individu yang berisiko tinggi, sehingga intervensi medis atau perubahan gaya hidup dapat dilakukan lebih awal untuk mencegah komplikasi.
 
@@ -52,9 +51,7 @@ Adapun tujuan dari proyek ini meliputi:
 
 - Mengevaluasi performa model menggunakan metrik evaluasi standar (akurasi, precision, recall, F1-score), dan mengidentifikasi apakah model tersebut layak digunakan untuk mendukung proses skrining awal pada individu dengan risiko diabetes.
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
+Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.  
 - Menambahkan bagian “Solution Statement” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
 
 ### Solution statements
@@ -101,7 +98,6 @@ Deskripsi Dataset :
 - Age	        :Usia individu dalam tahun.
 - Outcome	:Label target (0 = Tidak Diabetes, 1 = Diabetes).
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
 - Eksplorasi Data (Exploratory Data Analysis - EDA)
 1. Statistik Deskriptif
   > Distribusi Nilai Fitur: Dilakukan analisis distribusi data untuk melihat apakah terdapat skewness atau outlier.
@@ -116,8 +112,6 @@ Beberapa metode visualisasi yang digunakan untuk memahami pola data:
 3. Identifikasi Missing Values
   > Beberapa nilai dalam fitur seperti Glucose, BloodPressure, SkinThickness, Insulin, dan BMI memiliki nilai 0, yang secara medis tidak mungkin terjadi.
   > Solusi yang dilakukan adalah mengganti nilai nol dengan median atau menggunakan metode imputasi.
-
-======================================================================================
 
 ## Data Preparation
 Sebelum melatih model klasifikasi, dilakukan data preparation untuk memastikan kualitas data optimal. Proses ini mencakup penanganan missing values, normalisasi, penanganan outlier, dan penyeimbangan data.
@@ -137,7 +131,6 @@ Dataset ini memiliki ketidakseimbangan dalam jumlah pasien dengan diabetes (1) l
 - Split Data (Train-Test Split)
 Dataset dibagi menjadi 80% training data dan 20% testing data menggunakan stratified sampling agar proporsi kelas tetap seimbang.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
 - Mengganti nilai 0 dengan median karena Median lebih tahan terhadap outlier dibandingkan mean dan Menghindari bias akibat distribusi yang skewed
 - Menangani outlier karena outlier dapat menyebabkan model overfitting atau hasil yang tidak akurat dan menggunakan Winsorization agar distribusi tetap stabil tanpa menghapus data.
 - Menggunakan Min-Max Scaling untuk memastikan semua fitur dalam rentang 0-1, memudahkan model berbasis Gradient Descent dan mencegah fitur dengan nilai besar mendominasi model.
@@ -153,15 +146,12 @@ Algoritma yang digunakan untuk klasifikasi biner berdasarkan regresi logistik.
 Parameter yang Digunakan:
 - random_state=42: Agar hasil dapat direproduksi.
 
-
-
 2. Random Forest Classifier
 Algoritma berbasis ensemble yang menggunakan banyak decision tree untuk meningkatkan akurasi.
 Parameter yang Digunakan:
 - n_estimators=100: Jumlah decision tree yang digunakan.
 - random_state=42: Agar hasil dapat direproduksi.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
 1. Logistic Regression :
 Kelebihan  
 - Sederhana dan cepat untuk diimplementasikan.
@@ -192,30 +182,27 @@ Dari dua algoritma yang diuji (Logistic Regression vs. Random Forest), model ter
 Metrik Evaluasi yang Digunakan
 Karena masalah yang kita hadapi adalah klasifikasi biner (Diabetes atau Tidak), maka kita menggunakan empat metrik utama untuk menilai performa model:
 
-1. Akurasi (Accuracy) : Persentase prediksi yang benar dari seluruh data uji. 
-Digunakan saat :
-- Cocok jika dataset memiliki distribusi kelas yang seimbang.
-- Tidak cukup jika dataset memiliki kelas tidak seimbang, karena bisa memberi hasil menyesatkan.
+1. Accuracy
+- Kelebihan: Memberikan gambaran umum tentang seberapa sering model benar.
+- Kekurangan: Tidak cukup representatif jika data tidak seimbang.
+- Relevansi: Dataset Pima Indians memang sedikit tidak seimbang (jumlah penderita diabetes < non-diabetes), jadi akurasi perlu dilengkapi dengan metrik lain seperti recall dan F1.
 
-2. Precision (Presisi)
-Kemampuan model dalam menghindari false positive (kesalahan mendeteksi seseorang sebagai diabetes padahal sehat).
-Digunakan saat :
-- Jika false positive berisiko tinggi, misalnya kesalahan diagnosis yang bisa menyebabkan pasien menjalani perawatan yang tidak perlu.
+2. Precision
+- Kelebihan: Cocok untuk mengevaluasi seberapa "pasti" model saat menyatakan seseorang menderita diabetes.
+- Relevansi: Dalam konteks medis, false positive (mendiagnosis seseorang sebagai penderita padahal tidak) bisa membuat pasien khawatir atau menjalani pemeriksaan tak perlu. Maka, precision penting tapi bukan yang utama.
 
-3. Recall (Sensitivity)
-Kemampuan model dalam mendeteksi semua kasus positif dengan benar.
-​Digunakan saat :
-- Jika false negative lebih berbahaya, misalnya pasien diabetes yang tidak terdeteksi dapat mengalami komplikasi serius.
+3. Recall
+- Kelebihan: Memastikan bahwa kasus diabetes tidak luput dari deteksi.
 
-4. F1-Score
-Rata-rata harmonik antara precision dan recall.
-Digunakan saat :
-- Jika dataset tidak seimbang, karena F1-score menyeimbangkan precision & recall.
+- Relevansi: Sangat penting. Dalam konteks kesehatan, false negative sangat berbahaya—pasien yang tidak didiagnosis bisa luput dari penanganan dini. Recall tinggi artinya model lebih sensitif terhadap kasus positif.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+4. F1-score
+- Kelebihan: Metrik gabungan yang menyeimbangkan precision dan recall.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+- Relevansi: Sangat berguna karena mempertimbangkan trade-off antara prediksi positif yang benar dan kegagalan mendeteksi kasus penting. Cocok untuk dataset tidak seimbang.
+
+
+**Berikut Formula metrik dan bagaimana metrik tersebut bekerja:**
 1. Accuracy :
 Formula :
  ```math
@@ -252,10 +239,62 @@ Cara Kerjanya :
   - F1-score berguna ketika terdapat trade-off antara precision dan recall.
   - Jika dataset tidak seimbang, F1-score lebih akurat daripada akurasi dalam menilai performa model.
 
-**---Ini adalah bagian akhir laporan---**
+**Hasil Evaluasi dan Komparasi Model**
+Hasil evaluasi kuantitatif :
+1. Logistic Regression
+- Accuracy  : 0.73
+- Precision : 0.73
+- Recall    : 0.74
+- F1-score  : 0.73
+  
+2. Random Forest
+- Accuracy  : 0.80
+- Precision : 0.80
+- Recall    : 0.80
+- F1-score  : 0.80
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
 
+Model Terbaik Berdasarkan metrik evaluasi:  
 
+- Random Forest Classifier lebih unggul daripada Logistic Regression.
+
+- Meskipun belum dituning, model ini sudah memberikan recall dan F1-score lebih tinggi, yang sangat penting untuk kasus klasifikasi kesehatan.
+
+**Hubungan dengan Business Understanding**  
+1. Bagaimana membangun model klasifikasi machine learning untuk memprediksi risiko diabetes pada perempuan dewasa komunitas Pima Indian berdasarkan data kesehatan mereka?
+
+Tercapai :
+
+- Model klasifikasi berbasis Random Forest dan Logistic Regression telah berhasil dibangun dan diuji.
+
+- Model mampu melakukan prediksi secara cukup akurat dengan metrik yang kuat: F1-score 0.80, Recall 0.80, dan Precision 0.80 menggunakan Random Forest.
+
+- Hal ini membuktikan bahwa model dapat digunakan sebagai alat bantu prediksi awal risiko diabetes pada kelompok sasaran.
+
+2. Fitur-fitur kesehatan apa saja yang paling berpengaruh dalam menentukan apakah seseorang berisiko menderita diabetes atau tidak?  
+
+Tercapai :  
+
+- Dari model Random Forest, kita bisa memperoleh informasi tentang feature importance.
+
+- Fitur yang paling berpengaruh (berdasarkan evaluasi model) meliputi Glucose, BMI (Body Mass Index), Age, dan Insulin
+
+- Pengetahuan ini sangat penting bagi pihak medis dan komunitas kesehatan untuk fokus pada variabel-variabel yang paling relevan dalam pencegahan dan deteksi dini.
+
+3. Bagaimana performa model klasifikasi yang dibangun dalam hal akurasi, presisi, recall, dan F1-score pada dataset Pima Indians Diabetes?
+
+Tercapai
+
+- Evaluasi menunjukkan bahwa model Random Forest tanpa tuning memberikan hasil performa terbaik dibandingkan Logistic Regression. Accuracy: 80%, Precision: 80%, Recall: 80%, F1-score: 80%
+
+- Dengan nilai yang seimbang di semua metrik, model tidak hanya akurat tetapi juga cukup andal dalam menangani risiko false negative, yang krusial dalam konteks kesehatan.
+
+**Dampak Solusi terhadap Bisnis**  
+  
+Solusi yang dibangun dalam bentuk model klasifikasi:
+
+- Berguna secara praktis untuk membantu tenaga kesehatan atau pengambil kebijakan dalam melakukan skrining awal berbasis data.
+
+- Memberikan insight prediktif terhadap siapa yang memiliki risiko tinggi menderita diabetes.
+
+- Dapat diintegrasikan ke dalam sistem kesehatan komunitas untuk membantu proses intervensi dini, pengelolaan program edukasi, dan distribusi sumber daya.
