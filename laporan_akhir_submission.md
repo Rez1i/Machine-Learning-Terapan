@@ -51,17 +51,45 @@ Untuk mencapai tujuan proyek ini, digunakan dua pendekatan berbeda dalam sistem 
 - Cocok untuk menangkap konteks umum dari film berdasarkan fitur yang tidak hanya berasal dari teks bebas.
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dataset yang digunakan dalam proyek ini adalah TMDB 5000 Movie Dataset, tersedia secara publik di platform Kaggle. Dataset ini disediakan oleh The Movie Database (TMDB) dan berisi informasi lengkap mengenai lebih dari 4.800 film. [TMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata/data).  
+Dataset terdiri dari dua file utama:
+- tmdb_5000_movies.csv: berisi informasi konten film (judul, sinopsis, genre, popularitas, dll.)
+- tmdb_5000_credits.csv: berisi informasi kredensial seperti aktor dan kru produksi
 
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+Secara keseluruhan, dataset ini memiliki kualitas yang baik, namun diperlukan beberapa preprocessing seperti parsing data dalam bentuk JSON string, penggabungan antar tabel, dan pembersihan teks.
 
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+Variabel-variabel pada TMDB Movie Dataset adalah sebagai berikut:  
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
+tmdb_5000_movies.csv
+- id: ID unik film
+- title: Judul film
+- genres: Daftar genre film dalam format JSON
+- overview: Sinopsis film dalam bentuk teks
+- keywords: Daftar kata kunci yang relevan dengan film
+- popularity: Skor popularitas film berdasarkan TMDB
+- vote_average: Rata-rata rating pengguna
+- vote_count: Jumlah rating yang diberikan
+- runtime: Durasi film
+- release_date: Tanggal rilis film
+
+tmdb_5000_credits.csv
+- movie_id: ID film (untuk digabungkan dengan file movies.csv)
+- title: Judul film
+- cast: Daftar aktor utama (dalam format JSON)
+- crew: Daftar kru, termasuk posisi seperti sutradara (dalam format JSON)
+
+Tahapan Pemahaman Data (Exploratory Data Analysis):  
+Beberapa tahapan yang dilakukan untuk memahami data:
+1. Penggabungan data: Gabungkan tmdb_5000_movies.csv dan tmdb_5000_credits.csv menggunakan kolom title.
+2. Pengecekan null values: Mengecek apakah ada data yang kosong terutama pada kolom overview, cast, genres, dan crew.
+3. Parsing data JSON: Kolom seperti genres, keywords, cast, dan crew memiliki format string JSON dan perlu diekstrak menjadi list/teks.
+4. Visualisasi:
+   - Genre paling sering muncul
+   - Aktor atau sutradara paling sering muncul
+   - Distribusi panjang sinopsis (overview)
+   - Korelasi antara popularitas dan rating
+
+
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
