@@ -144,11 +144,30 @@ Fungsi rekomendasi dikembangkan untuk menerima input berupa judul film, lalu men
    Kekurangan: Kurang selektif, bisa menyebabkan over-representasi kata umum
 
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+Evaluasi sistem rekomendasi adalah tahap penting untuk menilai seberapa baik model yang telah dibangun dalam memberikan rekomendasi yang relevan. Pada bagian ini, kita akan menggunakan beberapa metrik evaluasi yang umum digunakan dalam sistem rekomendasi, seperti Precision, Recall, dan F1-Score.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Berikut adalah penjelasan dan kode untuk menghitung Precision, Recall, dan F1-Score berdasarkan kemiripan konten:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+1. Definisi Precision, Recall, dan F1-Score
+   - Precision: Persentase film yang direkomendasikan yang benar-benar relevan.
+   - Recall: Persentase film relevan yang berhasil direkomendasikan.
+   - F1-Score: Harmonic mean antara Precision dan Recall, menggabungkan keduanya menjadi satu metrik.  
 
-**---Ini adalah bagian akhir laporan---**
+2. Membuat Dataset untuk Evaluasi  
+Karena kita tidak memiliki data feedback atau rating pengguna, kita akan membuat asumsi dengan menentukan film relevan berdasarkan nilai cosine similarity. Kita akan mendefinisikan film relevan sebagai film dengan cosine similarity di atas threshold tertentu.
+3. Evaluasi Berdasarkan Top-N Recommendations 
+4. Penjelasan Kode:  
+  - Evaluasi Berdasarkan Threshold Cosine Similarity: Kita menggunakan nilai cosine similarity untuk menentukan film yang relevan. Jika nilai cosine similarity lebih besar dari threshold, maka film tersebut dianggap relevan.
+  - y_true: Array ini berisi 1 untuk film yang relevan (cosine similarity ≥ threshold) dan 0 untuk film yang tidak relevan.
+  - y_pred: Karena kita selalu memberikan rekomendasi, nilai prediksi akan selalu 1.
+  - Precision, Recall, dan F1-Score: Menggunakan sklearn.metrics untuk menghitung metrik evaluasi berdasarkan perbandingan antara y_true dan y_pred.
+
+5. Output Evaluasi
+memberikan hasil evaluasi untuk setiap film yang diuji dengan menghitung Precision, Recall, dan F1-Score berdasarkan threshold yang ditetapkan. Ini akan memberikan gambaran seberapa baik sistem memberikan rekomendasi yang relevan berdasarkan kemiripan konten. berikut penjabarannya :
+- Recall 1.0 untuk semua kasus menunjukkan bahwa semua item yang relevan berhasil direkomendasikan oleh sistem.
+- Precision rendah (terutama untuk The Dark Knight) menunjukkan bahwa banyak item yang direkomendasikan ternyata tidak relevan.
+- F1-Score tertinggi (0.5714) didapat oleh Avatar dan Spectre, kemungkinan besar karena threshold-nya lebih seimbang (tidak terlalu tinggi).
+
+**Insight**  
+Threshold yang lebih rendah cenderung meningkatkan recall tetapi bisa menurunkan precision. Untuk sistem rekomendasi, kadang recall tinggi lebih diutamakan agar pengguna tidak melewatkan item relevan, tapi tetap perlu menjaga precision agar hasil tetap akurat dan tidak terlalu banyak "noise".
+
